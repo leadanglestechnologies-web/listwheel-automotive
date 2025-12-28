@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - Dealership AI Sales Agent</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #1e3c72 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #333;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            max-width: 700px;
+            width: 100%;
+            padding: 50px 40px;
+            text-align: center;
+            animation: fadeInUp 0.6s ease-out;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            animation: scaleIn 0.5s ease-out 0.2s both;
+            box-shadow: 0 10px 30px rgba(30, 60, 114, 0.3);
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .success-icon svg {
+            width: 50px;
+            height: 50px;
+            stroke: white;
+            stroke-width: 3;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 12px;
+            padding: 35px;
+            margin: 30px 0;
+            text-align: left;
+            border: 1px solid #e9ecef;
+        }
+
+        .info-box h2 {
+            font-size: 22px;
+            color: #1a1a1a;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .info-box h2::before {
+            content: "🤖";
+            font-size: 28px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            gap: 15px;
+        }
+
+        .info-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-icon {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .info-icon svg {
+            width: 16px;
+            height: 16px;
+            stroke: white;
+            stroke-width: 2.5;
+            fill: none;
+        }
+
+        .info-content h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+        }
+
+        .info-content p {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .setup-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            margin: 25px 0;
+            box-shadow: 0 4px 15px rgba(30, 60, 114, 0.3);
+        }
+
+        .setup-badge::before {
+            content: "⚡";
+            font-size: 20px;
+        }
+
+        .next-steps {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e9ecef;
+        }
+
+        .next-steps h3 {
+            font-size: 20px;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .next-steps p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .benefit-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+        }
+
+        .benefit-item strong {
+            display: block;
+            color: #1e3c72;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .benefit-item span {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .contact-info {
+            margin-top: 35px;
+            padding-top: 30px;
+            border-top: 2px solid #e9ecef;
+            font-size: 16px;
+            color: #1e3c72;
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 25px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .info-box {
+                padding: 25px 20px;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">
+            <svg viewBox="0 0 24 24">
+                <path d="M20 6L9 17l-5-5"/>
+            </svg>
+        </div>
+
+        <h1>Thank You for Your Purchase!</h1>
+        <p class="subtitle">Your order has been confirmed. We're excited to transform your dealership's online presence with our AI-powered virtual sales assistant.</p>
+
+        <div class="setup-badge">
+            Full Setup & Integration Included
+        </div>
+
+        <div class="info-box">
+            <h2>What Happens Next?</h2>
+            
+            <div class="info-item">
+                <div class="info-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                </div>
+                <div class="info-content">
+                    <h3>Initial Setup & Configuration</h3>
+                    <p>Our team will set up your AI sales agent and configure it to match your dealership's brand and requirements. We'll handle all the technical integration seamlessly.</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        <path d="M2 17l10 5 10-5"/>
+                        <path d="M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <div class="info-content">
+                    <h3>AI Training on Your Inventory</h3>
+                    <p>We'll train the AI agent on your complete inventory, including all models, features, specifications, and pricing. The agent will learn everything about your vehicles to assist customers effectively.</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                </div>
+                <div class="info-content">
+                    <h3>Go Live & Start Converting</h3>
+                    <p>Once everything is set up, your AI sales agent will go live on your website. It will help customers explore models, compare features, and schedule test drives 24/7, just like leading OEMs.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="next-steps">
+            <h3>Transform Your Dealership's Online Presence</h3>
+            <p>Your always-on digital agent will help customers explore models, compare features, and schedule test drives—increasing engagement and converting website visitors into showroom appointments.</p>
+            
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <strong>24/7 Availability</strong>
+                    <span>Always-on assistance</span>
+                </div>
+                <div class="benefit-item">
+                    <strong>Smart Engagement</strong>
+                    <span>Interactive model exploration</span>
+                </div>
+                <div class="benefit-item">
+                    <strong>Feature Comparison</strong>
+                    <span>Side-by-side analysis</span>
+                </div>
+                <div class="benefit-item">
+                    <strong>Appointment Booking</strong>
+                    <span>Seamless test drive scheduling</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-info">
+            <p>We appreciate your business and look forward to helping you grow!</p>
+        </div>
+    </div>
+</body>
+</html>
